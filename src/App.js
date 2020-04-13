@@ -7,7 +7,8 @@ import { B_toolList, B_toolEdit, B_toolCreate} from './pages/b_tools';
 
 import dataProvider from './dataProvider';
 //import { PostList, PostEdit, PostCreate} from './pages/posts';
-import simpleRestProvider from 'ra-data-simple-rest';
+//import simpleRestProvider from 'ra-data-simple-rest';
+//import simpleRestProvider2 from 'ra-data-json-server';
 
 const httpClient = (url, options = {}) => {
   if (!options.headers) {

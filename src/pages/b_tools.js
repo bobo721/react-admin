@@ -1,6 +1,9 @@
 // in src/pages/b_tool.js
 import React from 'react';
-import { List, NumberInput, ReferenceInput, Datagrid, Edit, ReferenceField, EditButton, Create, SelectInput, SimpleForm, TextField, DateInput, DateField, Filter, TextInput, BooleanInput, NumberField } from 'react-admin';
+import { List, NumberInput, ReferenceInput, FunctionField, Datagrid, Edit, ReferenceField, EditButton, Create, SelectInput, SimpleForm, TextField, DateInput, DateField, Filter, TextInput, BooleanInput, NumberField } from 'react-admin';
+
+
+
 
 
 const B_toolFilter = (props) => (
@@ -19,12 +22,13 @@ export const B_toolList = props => (
             <NumberField source="time" />
             <DateField source="createdAt" />
             <DateField source="updatedAt" />
-            <ReferenceField source="UserId" reference="Users">
+            <ReferenceField label="User" source="UserId" reference="users">
                 <TextField source="name" />
             </ReferenceField>
-            <ReferenceField source="ToolId" reference="Tools">
+            <ReferenceField label="Tool" source="ToolId" reference="tools">
                 <TextField source="code" />
-            </ReferenceField>            
+            </ReferenceField>
+        
         </Datagrid>
     </List>
 );
