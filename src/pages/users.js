@@ -25,7 +25,10 @@ export const UserList = props => (
     </List>
 );
 
-export const UserShow = (props) => (
+export const UserShow = (props) => {
+    console.log("user props");
+    console.log(props);
+    return(
     <Show {...props}>
         <TabbedShowLayout>
             <Tab label="summary">
@@ -44,19 +47,23 @@ export const UserShow = (props) => (
                 <TextField label="Nb views" source="views" />
             </Tab>
             <Tab label="tools">
-                <ReferenceManyField reference="b_tools" target="UserId" addLabel={false}>
-                    <Datagrid>
-                        <ReferenceField source="ToolId" reference="Tools">
-                            <TextField source="code" />
+                
+                <ReferenceManyField  reference="b_tools" target="UserId" addLabel={false}>
+                
+                <List filter={{ user: "1"}} {...props}>
+                    <Datagrid {...props}>         
+                        <ReferenceField source="ToolId"  reference="tools">                           
+                            <TextField source="code"/>   
                         </ReferenceField>
-                        <DateField source="created_at" />
-                        <EditButton />
+                        <TextField source="UserId"/>
                     </Datagrid>
+                </List>
+                
                 </ReferenceManyField>
             </Tab>
         </TabbedShowLayout>
     </Show>
-);
+    )};
 
 export const UserEdit = props => (
     <Edit {...props}>

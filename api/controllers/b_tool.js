@@ -12,10 +12,11 @@ module.exports = {
         const sortOrder = req.query.sortOrder;
         const filtry = JSON.parse(req.query.filter);
 
-        //let text_filtr = "";
-        //if (typeof filtry.q !== "undefined") {
-        //    text_filtr = filtry.q;
-        //}
+        console.log(limit);
+        console.log(offset);
+        console.log(sortBy);
+        console.log(sortOrder);
+        console.log(filtry);
         
 
         //text_filtr = filtry.q;
@@ -27,12 +28,13 @@ module.exports = {
         const options = {
             raw: true,
             where: ({
-                
+            
             }),
             order: 
                 []
             ,
         };
+        console.log("options b_tools") ;
         console.log(options) ;
 
         if (typeof limit !== "undefined") {
@@ -50,15 +52,20 @@ module.exports = {
         if (typeof filtry.id !== "undefined") {
             options.where.id = filtry.id;
         }
+
+        if (typeof filtry.UserId !== "undefined") {
+            options.where.UserId = [filtry.UserId];
+            
+        }
         console.log(options) ;
 
 
         return B_tool
-        .findAll(options)
+        .findAll({raw: true, where: {UserId: 1}})
             //console.log(user);
             //res.status(201).send(test); 
         .then(b_tool => {
-            //console.log(user.rows);
+            //console.log(b_tool);
             res.header("Content-Range", 'items 0-' + b_tool.length + '/' + b_tool.length);
             res.status(206).send(b_tool);
         })
@@ -66,7 +73,7 @@ module.exports = {
     },
 
     findManyUser(req, res) {
-        //console.log(req);  
+        console.log("B_tools many user");  
         const  limit = Number(req.query.limit);  
         const  offset = Number(req.query.offset);
         let filtry = JSON.parse(req.query.filter);

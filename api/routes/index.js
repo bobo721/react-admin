@@ -29,5 +29,6 @@ module.exports = (app) => {
     app.get('/api/b_tools/:id', b_toolController.findByID);
     app.put('/api/b_tools/:id', b_toolController.update);
     app.post('/api/b_tools', b_toolController.create);
+    app.delete('/api/b_tools/:id', b_toolController.delete);
 
 }
