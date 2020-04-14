@@ -39,10 +39,8 @@ export const B_toolCreate = props => (
         <TextField source="id" />
             <NumberInput source="active" />
             <NumberInput source="time" />
-            <DateField source="createdAt" />
-            <DateField source="updatedAt" />
-            <ReferenceInput source="UserId" reference="Users"><TextInput source="id" /></ReferenceInput>
-            <ReferenceField source="ToolId" reference="Tools"><TextInput source="id" /></ReferenceField>
+            <ReferenceInput source="UserId" reference="users"><SelectInput optionText="name" /></ReferenceInput>
+            <ReferenceInput source="ToolId" reference="tools"><SelectInput optionText="code" /></ReferenceInput>
         </SimpleForm>
     </Create>
 );
@@ -50,12 +48,12 @@ export const B_toolCreate = props => (
 export const B_toolEdit = props => (
     <Edit {...props}>
         <SimpleForm>
-        <NumberInput source="active" />
+            <NumberInput source="active" />
             <NumberInput source="time" />
             <DateField source="createdAt" />
             <DateField source="updatedAt" />
-            <ReferenceField source="UserId" reference="Users"><TextInput source="id" /></ReferenceField>
-            <ReferenceField source="ToolId" reference="Tools"><TextInput source="id" /></ReferenceField>
+            <ReferenceInput source="UserId" reference="users"><SelectInput optionText="name" /></ReferenceInput>
+            <ReferenceInput source="ToolId" reference="tools"><SelectInput optionText="code" /></ReferenceInput>
         </SimpleForm>
     </Edit>
 );

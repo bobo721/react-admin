@@ -5,18 +5,12 @@ const B_tool = require('../models').B_tool;
 module.exports = {
 
     findAll(req, res) {
-        //console.log(req);  
+        console.log(req);  
         const limit = (req.query.limit);  
         const offset = (req.query.offset);
         const sortBy = req.query.sortBy;
         const sortOrder = req.query.sortOrder;
         const filtry = JSON.parse(req.query.filter);
-
-        console.log(limit);
-        console.log(offset);
-        console.log(sortBy);
-        console.log(sortOrder);
-        console.log(filtry);
 
         //let text_filtr = "";
         //if (typeof filtry.q !== "undefined") {
@@ -71,7 +65,7 @@ module.exports = {
         .catch(error => res.status(400).send(error));
     },
 
-    findManyR(req, res) {
+    findManyUser(req, res) {
         //console.log(req);  
         const  limit = Number(req.query.limit);  
         const  offset = Number(req.query.offset);
@@ -117,24 +111,26 @@ module.exports = {
     },
 
     create(req, res) {
-        return Tool
+        return B_tool
         .create({
-            name: req.body.name,
-            code: req.body.code,
-            state: req.body.state,
-            free: req.body.free,
+            active: req.body.active,
+            time: req.body.time,
+            UserId: req.body.UserId,
+            ToolId: req.body.ToolId,
         })
-        .then(tool => res.status(201).send(tool))
+        .then(b_tool => res.status(201).send(b_tool))
         .catch(error => res.status(400).send(error));
     },
 
     update(req, res) {
-        return Tool
+        return B_tool
         .update({
-            name: req.body.name,
-            code: req.body.code,
-            state: req.body.state,
-            free: req.body.free,
+            active: req.body.active,
+            time: req.body.time,
+            createdAt: req.body.createdAt,
+            updatedAt: req.body.updatedAt,
+            UserId: req.body.UserId,
+            ToolId: req.body.ToolId,
         }, {
             where: {
               id: req.params.id 
@@ -142,29 +138,29 @@ module.exports = {
             returning: true,
             plain: true
           })
-        .then(() => {return Tool
+        .then(() => {return B_tool
             .findOne({
                 where: {
                   id: req.params.id 
                 }
               })})
-        .then(tool => {
-            console.log(tool);
-            res.status(201).send(tool);
+        .then(b_tool => {
+            console.log(b_tool);
+            res.status(201).send(b_tool);
         })
         .catch(error => res.status(400).send(error));
     },
 
     delete(req, res) {
-        return Tool
+        return B_tool
         .destroy({
             where: {
               id: req.params.id 
             }
           })
-        .then(tool => {
-            console.log(tool);
-            res.status(200).send({ message: "tool ID " + req.params.id + " Smazán" });
+        .then(b_tool => {
+            console.log(b_tool);
+            res.status(200).send({ message: "b_tool ID " + req.params.id + " Smazán" });
         })
         .catch(error => res.status(400).send(error));
     },

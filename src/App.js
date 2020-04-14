@@ -26,7 +26,7 @@ const App = () => (
       <Admin dataProvider={dataProvider2}>
           <Resource name="users" list={UserList} edit={UserEdit} create={UserCreate} show={UserShow} />
           <Resource name="tools" list={ToolList} edit={ToolEdit} create={ToolCreate} />
-          <Resource name="b_tools" list={B_toolList} />
+          <Resource name="b_tools" list={B_toolList}  edit={B_toolEdit} create={B_toolCreate}/>
       </Admin>
   );
 
