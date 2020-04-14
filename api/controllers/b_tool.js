@@ -5,25 +5,13 @@ const B_tool = require('../models').B_tool;
 module.exports = {
 
     findAll(req, res) {
-        console.log(req);  
+        
         const limit = (req.query.limit);  
         const offset = (req.query.offset);
         const sortBy = req.query.sortBy;
         const sortOrder = req.query.sortOrder;
         const filtry = JSON.parse(req.query.filter);
-
-        console.log(limit);
-        console.log(offset);
-        console.log(sortBy);
-        console.log(sortOrder);
-        console.log(filtry);
         
-
-        //text_filtr = filtry.q;
-        //delete filtry.q;
-       // console.log(filtry) ;
-        //console.log(text_filtr) ;
-
 
         const options = {
             raw: true,
@@ -32,8 +20,7 @@ module.exports = {
             }),
             
         };
-        console.log("options b_tools") ;
-        console.log(options) ;
+
 
         if (typeof limit !== "undefined") {
             options.limit = Number(limit);
@@ -43,9 +30,6 @@ module.exports = {
             options.offset = Number(offset);
         }
 
-       // if ((typeof sortBy !== "undefined") && (typeof sortOrder !== "undefined")) {
-       //     options.order = [[sortBy, sortOrder]];
-       // }
 
         if (typeof filtry.id !== "undefined") {
             options.where.id = filtry.id;
@@ -55,7 +39,12 @@ module.exports = {
             options.where.UserId = filtry.UserId;
             
         }
-        console.log(options) ;
+
+        if (typeof filtry.active !== "undefined") {
+            options.where.active = filtry.active;
+            
+        }
+       
 
         return B_tool
         .findAll(options)
@@ -69,8 +58,8 @@ module.exports = {
         .catch(error => res.status(400).send(error));
     },
 
-    findManyUser(req, res) {
-        console.log("B_tools many user");  
+    findMany(req, res) {
+       
         const  limit = Number(req.query.limit);  
         const  offset = Number(req.query.offset);
         let filtry = JSON.parse(req.query.filter);
@@ -80,8 +69,6 @@ module.exports = {
         }
         //text_filtr = filtry.q;
         delete filtry.q;
-        console.log(filtry) ;
-        console.log(text_filtr) ;
         const sortBy = req.query.sortBy;
         return B_tool
         .findAndCountAll({
@@ -100,7 +87,7 @@ module.exports = {
     },
 
     findByID(req, res) {
-        console.log("test");
+        
         return B_tool
         .findOne({
             where: {
@@ -149,7 +136,7 @@ module.exports = {
                 }
               })})
         .then(b_tool => {
-            console.log(b_tool);
+            
             res.status(201).send(b_tool);
         })
         .catch(error => res.status(400).send(error));
@@ -163,7 +150,7 @@ module.exports = {
             }
           })
         .then(b_tool => {
-            console.log(b_tool);
+            
             res.status(200).send({ message: "b_tool ID " + req.params.id + " Smazán" });
         })
         .catch(error => res.status(400).send(error));

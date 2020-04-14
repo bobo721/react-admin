@@ -1,6 +1,6 @@
 // in src/pages/users.js
-import React from 'react';
-import { List, Edit, Show, ReferenceField, RichTextField, DateField, NumberField, BooleanField, ReferenceManyField, Create,TabbedShowLayout, Tab, SimpleForm, EditButton, Datagrid, TextField, EmailField, Filter, TextInput } from 'react-admin';
+import React, {loading} from 'react';
+import {SimpleShowLayout, useRefresh, useNotify, useMutation, Button, List, Edit, Show, ReferenceField, RichTextField, DateField, NumberField, BooleanField, ReferenceManyField, Create,TabbedShowLayout, Tab, SimpleForm, EditButton, Datagrid, TextField, EmailField, Filter, TextInput } from 'react-admin';
 
 const UserFilter = (props) => (
     <Filter {...props}>
@@ -8,6 +8,7 @@ const UserFilter = (props) => (
         <TextInput label="Title" source="name" defaultValue="" />
     </Filter>
 );
+
 
 export const UserList = props => (
     <List {...props} filters={<UserFilter />}>
@@ -25,11 +26,49 @@ export const UserList = props => (
     </List>
 );
 
+
+
 export const UserShow = (props) => {
     console.log("user props");
     console.log(props);
+
+
+
+
+    const ReturnButton = ({ record }) => {
+        const notify = useNotify();
+        const refresh = useRefresh();
+        const [approve, { loading }] = useMutation(
+            {
+                type: 'update',
+                resource: 'b_tools',
+                payload: { id: record.id, data: { active: false } },
+            },
+            {
+                onSuccess: ({ data }) => {
+                    notify('Nářadí vráceno');
+                    refresh();
+                    
+                },
+                onFailure: (error) => notify(`Comment approval error: ${error.message}`, 'warning'),
+            }
+        );
+        return <Button label="Vrátit nářadí" onClick={approve} disabled={loading} />;
+    };
+
+    const BorrowButton = ({ record }) => {
+        const notify = useNotify();
+        const refresh = useRefresh();
+        const borrow = () => {return(console.log("user"))}
+        return <Button label="Půjčit nářadí" onClick={borrow} disabled={loading} />;
+    };
+
+
     return(
     <Show {...props}>
+        <SimpleShowLayout>
+            <TextField source="name" />
+           
         <TabbedShowLayout>
             <Tab label="summary">
                 <TextField label="Id" source="id" />
@@ -46,22 +85,38 @@ export const UserShow = (props) => {
                 <BooleanField label="Allow comments?" source="commentable" defaultValue />
                 <TextField label="Nb views" source="views" />
             </Tab>
-            <Tab label="tools">
-                
-                <ReferenceManyField  reference="b_tools" target="UserId" addLabel={false}>
-                
-                <List filter={{ user: "1"}} {...props}>
-                    <Datagrid {...props}>         
-                        <ReferenceField source="ToolId"  reference="tools">                           
-                            <TextField source="code"/>   
-                        </ReferenceField>
-                        <TextField source="UserId"/>
+            <Tab label="Nářadí">
+            
+            <ReferenceManyField filter={{free: 1}}  reference="tools" target="null" addLabel={false} sort={{ field: 'created_at', order: 'DESC' }}>
+                <List {...props}>                                
+                    <Datagrid>         
+                        <TextField source="code"/>
+                        <TextField source="name"/>
+                        <TextField source="state"/>
+                        <BorrowButton/>
                     </Datagrid>
                 </List>
-                
+            </ReferenceManyField>
+            
+
+
+            </Tab>
+            <Tab label="Vypujčené nářadí">
+           
+                <ReferenceManyField filter={{active: 1}}  reference="b_tools" target="UserId" addLabel={false} sort={{ field: 'created_at', order: 'DESC' }}>                                
+                    <Datagrid>         
+                        <ReferenceField label="Tool" source="ToolId" reference="tools">
+                            <TextField source="code" />
+                        </ReferenceField>
+                        <NumberField source="active"/>
+                        <NumberField source="time"/>
+                        <ReturnButton/>
+                    </Datagrid>
+
                 </ReferenceManyField>
             </Tab>
         </TabbedShowLayout>
+        </SimpleShowLayout>
     </Show>
     )};
 

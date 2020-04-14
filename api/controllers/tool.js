@@ -11,23 +11,8 @@ module.exports = {
         const sortBy = req.query.sortBy;
         const sortOrder = req.query.sortOrder;
         const filtry = JSON.parse(req.query.filter);
-
-        console.log(limit);
-        console.log(offset);
-        console.log(sortBy);
-        console.log(sortOrder);
         console.log(filtry);
 
-        //let text_filtr = "";
-        //if (typeof filtry.q !== "undefined") {
-        //    text_filtr = filtry.q;
-        //}
-        
-
-        //text_filtr = filtry.q;
-        //delete filtry.q;
-       // console.log(filtry) ;
-        //console.log(text_filtr) ;
 
 
         const options = {
@@ -39,7 +24,6 @@ module.exports = {
                 []
             ,
         };
-        console.log(options) ;
 
         if (typeof limit !== "undefined") {
             options.limit = Number(limit);
@@ -56,7 +40,10 @@ module.exports = {
         if (typeof filtry.id !== "undefined") {
             options.where.id = filtry.id;
         }
-        console.log(options) ;
+
+        if (typeof filtry.free !== "undefined") {
+            options.where.free = filtry.free;
+        }
 
 
         return Tool
@@ -74,7 +61,6 @@ module.exports = {
     findMany(req, res) {
         console.log("find many")
         let filtry = JSON.parse(req.query.filter);
-        console.log(filtry)
         return Tool
         .findAll({
             where: {
@@ -84,7 +70,7 @@ module.exports = {
             }
           })
         .then(tool => {
-            console.log(tool);
+           
             res.status(200).send(  tool  );
         })
         .catch(error => res.status(400).send(error));
@@ -98,7 +84,7 @@ module.exports = {
             }
           })
         .then(tool => {
-            console.log(tool);
+            
             res.status(200).send( tool );
         })
         .catch(error => res.status(400).send(error));
@@ -137,7 +123,7 @@ module.exports = {
                 }
               })})
         .then(tool => {
-            console.log(tool);
+            
             res.status(201).send(tool);
         })
         .catch(error => res.status(400).send(error));
@@ -151,7 +137,7 @@ module.exports = {
             }
           })
         .then(tool => {
-            console.log(tool);
+            
             res.status(200).send({ message: "tool ID " + req.params.id + " Smazán" });
         })
         .catch(error => res.status(400).send(error));

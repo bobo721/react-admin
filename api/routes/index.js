@@ -25,7 +25,7 @@ module.exports = (app) => {
     app.delete('/api/tools/:id', toolController.delete);
 
     app.get('/api/b_tools', b_toolController.findAll);
-    app.get('/api/b_tools/manyuser', b_toolController.findManyUser);
+    app.get('/api/b_tools/many', b_toolController.findMany);
     app.get('/api/b_tools/:id', b_toolController.findByID);
     app.put('/api/b_tools/:id', b_toolController.update);
     app.post('/api/b_tools', b_toolController.create);

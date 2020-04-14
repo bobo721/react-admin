@@ -4,30 +4,12 @@ const User = require('../models').User;
 
 module.exports = {
 
-    findAll(req, res) {
-        //console.log(req);  
+    findAll(req, res) { 
         const limit = (req.query.limit);  
         const offset = (req.query.offset);
         const sortBy = req.query.sortBy;
         const sortOrder = req.query.sortOrder;
         const filtry = JSON.parse(req.query.filter);
-
-        console.log(limit);
-        console.log(offset);
-        console.log(sortBy);
-        console.log(sortOrder);
-        console.log(filtry);
-
-        //let text_filtr = "";
-        //if (typeof filtry.q !== "undefined") {
-        //    text_filtr = filtry.q;
-        //}
-        
-
-        //text_filtr = filtry.q;
-        //delete filtry.q;
-       // console.log(filtry) ;
-        //console.log(text_filtr) ;
 
 
         const options = {
@@ -39,7 +21,6 @@ module.exports = {
                 []
             ,
         };
-        console.log(options) ;
 
         if (typeof limit !== "undefined") {
             options.limit = Number(limit);
@@ -56,7 +37,6 @@ module.exports = {
         if (typeof filtry.id !== "undefined") {
             options.where.id = filtry.id;
         }
-        console.log(options) ;
 
 
         return User
@@ -72,9 +52,9 @@ module.exports = {
     },
 
     findMany(req, res) {
-        console.log("find many")
+        
         let filtry = JSON.parse(req.query.filter);
-        console.log(filtry)
+        
         return User
         .findAll({
             where: {
@@ -98,7 +78,7 @@ module.exports = {
             }
           })
         .then(user => {
-            console.log(user);
+           
             res.status(200).send( user );
         })
         .catch(error => res.status(400).send(error));
@@ -133,7 +113,7 @@ module.exports = {
                 }
               })})
         .then(user => {
-            console.log(user);
+           
             res.status(201).send(user);
         })
         .catch(error => res.status(400).send(error));
@@ -147,7 +127,7 @@ module.exports = {
             }
           })
         .then(user => {
-            console.log(user);
+            
             res.status(200).send({ message: "User ID " + req.params.id + " Smazán" });
         })
         .catch(error => res.status(400).send(error));
