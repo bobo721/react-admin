@@ -30,9 +30,7 @@ module.exports = {
             where: ({
             
             }),
-            order: 
-                []
-            ,
+            
         };
         console.log("options b_tools") ;
         console.log(options) ;
@@ -45,23 +43,22 @@ module.exports = {
             options.offset = Number(offset);
         }
 
-        if ((typeof sortBy !== "undefined") && (typeof sortOrder !== "undefined")) {
-            options.order = [[sortBy, sortOrder]];
-        }
+       // if ((typeof sortBy !== "undefined") && (typeof sortOrder !== "undefined")) {
+       //     options.order = [[sortBy, sortOrder]];
+       // }
 
         if (typeof filtry.id !== "undefined") {
             options.where.id = filtry.id;
         }
 
         if (typeof filtry.UserId !== "undefined") {
-            options.where.UserId = [filtry.UserId];
+            options.where.UserId = filtry.UserId;
             
         }
         console.log(options) ;
 
-
         return B_tool
-        .findAll({raw: true, where: {UserId: 1}})
+        .findAll(options)
             //console.log(user);
             //res.status(201).send(test); 
         .then(b_tool => {
