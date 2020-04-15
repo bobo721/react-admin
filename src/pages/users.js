@@ -1,6 +1,6 @@
 // in src/pages/users.js
 import React, {loading} from 'react';
-import {SimpleShowLayout, useRefresh, useNotify, useMutation, Button, List, Edit, Show, ReferenceField, RichTextField, DateField, NumberField, BooleanField, ReferenceManyField, Create,TabbedShowLayout, Tab, SimpleForm, EditButton, Datagrid, TextField, EmailField, Filter, TextInput } from 'react-admin';
+import {SelectInput, useMutation, SimpleShowLayout, useRefresh, useNotify, Button, List, Edit, Show, ReferenceField, RichTextField, DateField, NumberField, BooleanField, ReferenceManyField, Create,TabbedShowLayout, Tab, SimpleForm, EditButton, Datagrid, TextField, EmailField, Filter, TextInput } from 'react-admin';
 
 const UserFilter = (props) => (
     <Filter {...props}>
@@ -110,6 +110,11 @@ export const UserShow = (props) => {
                         </ReferenceField>
                         <NumberField source="active"/>
                         <NumberField source="time"/>
+                        <ReferenceField label="Tool" source="ToolId" reference="tools">
+                        
+                        <TextField source="state" />
+                        
+                        </ReferenceField>
                         <ReturnButton/>
                     </Datagrid>
 

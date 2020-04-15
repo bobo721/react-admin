@@ -12,8 +12,14 @@ module.exports = (sequelize, DataTypes) => {
   })
 
   const User = sequelize.define('User', {
-    name: DataTypes.STRING,
-    email: DataTypes.STRING
+    firstName: DataTypes.STRING,
+    lastName: DataTypes.STRING,
+    phone: DataTypes.STRING,
+    email: DataTypes.STRING,
+    birthDate: DataTypes.DATEONLY,
+    position: DataTypes.STRING,
+    role: DataTypes.STRING,
+    pwd: DataTypes.STRING,
   }, {});
   User.associate = function(models) {
     User.hasMany(models.B_tool);
