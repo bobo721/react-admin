@@ -13,13 +13,10 @@ const UserFilter = (props) => (
 export const UserList = props => (
     <List {...props} filters={<UserFilter />}>
         <Datagrid rowClick="show">
-            <TextField source="id" />
-            <TextField source="name" />
-            <TextField source="username" />
+            <TextField source="firstName" />
+            <TextField source="lastName" />
             <EmailField source="email" />
-            <TextField source="address.street" />
             <TextField source="phone" />
-            <TextField source="website" />
             <TextField source="company.name" />
             <EditButton />
         </Datagrid>
