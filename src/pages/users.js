@@ -53,14 +53,69 @@ export const UserShow = (props) => {
                 onFailure: (error) => notify(`Comment approval error: ${error.message}`, 'warning'),
             }
         );
-        return <Button label="Vrátit nářadí" onClick={approve} disabled={loading} />;
+
+        const [tool_update] = useMutation(
+            {
+                type: 'update',
+                resource: 'tools',
+                payload: { id: record.ToolId, data: { free: true } },
+            },
+            {
+                onSuccess: ({ data }) => {
+                    notify('Nářadí uvolněno');
+                    
+                    
+                },
+                onFailure: (error) => notify(`Comment approval error: ${error.message}`, 'warning'),
+            }
+        );
+        return <Button label="Vrátit nářadí" onClick={() => {
+            approve();
+            tool_update();
+          }} disabled={loading} />;
     };
 
     const BorrowButton = ({ record }) => {
         const notify = useNotify();
         const refresh = useRefresh();
-        const borrow = () => {return(console.log("user"))}
-        return <Button label="Půjčit nářadí" onClick={borrow} disabled={loading} />;
+        console.log(record, props);
+        const [borrow, { loading }] = useMutation(
+            {
+                type: 'create',
+                resource: 'b_tools',
+                payload: { data: { active: true, UserId: props.id, ToolId: record.id  } },
+            },
+            {
+                onSuccess: ({ data }) => {
+                    notify('Nářadí půjčeno');
+                    
+                    
+                },
+                onFailure: (error) => notify(`Comment approval error: ${error.message}`, 'warning'),
+            }
+        );
+        const [tool_update] = useMutation(
+            {
+                type: 'update',
+                resource: 'tools',
+                payload: { id: record.id, data: { free: false } },
+            },
+            {
+                onSuccess: ({ data }) => {
+                    notify('Nářadí rezervováno');
+                    refresh();
+                    
+                },
+                onFailure: (error) => notify(`Comment approval error: ${error.message}`, 'warning'),
+            }
+        );
+
+        return <Button label="Půjčit nářadí" onClick={() => {
+            borrow();
+            tool_update();
+          }} disabled={loading} />;
+
+
     };
 
 
@@ -88,14 +143,15 @@ export const UserShow = (props) => {
             <Tab label="Nářadí">
             
             <ReferenceManyField filter={{free: 1}}  reference="tools" target="null" addLabel={false} sort={{ field: 'created_at', order: 'DESC' }}>
-                <List {...props}>                                
-                    <Datagrid>         
+                                               
+                    <Datagrid>  
+                        <TextField source="free"/>         
                         <TextField source="code"/>
                         <TextField source="name"/>
                         <TextField source="state"/>
                         <BorrowButton/>
                     </Datagrid>
-                </List>
+                
             </ReferenceManyField>
             
 

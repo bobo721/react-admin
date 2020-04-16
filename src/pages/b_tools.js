@@ -23,7 +23,7 @@ export const B_toolList = props => (
             <DateField source="createdAt" />
             <DateField source="updatedAt" />
             <ReferenceField label="User" source="UserId" reference="users">
-                <TextField source="name" />
+                <TextField source="firstName" />
             </ReferenceField>
             <ReferenceField label="Tool" source="ToolId" reference="tools">
                 <TextField source="code" />

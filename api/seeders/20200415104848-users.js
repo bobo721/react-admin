@@ -2,6 +2,7 @@
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
+
       return queryInterface.bulkInsert('Users', [{
         firstName: 'Tomáš',
         lastName: 'Princ',
@@ -13,20 +14,19 @@ module.exports = {
         pwd: '123456',
         createdAt: new Date(),
         updatedAt: new Date()
-      }]);
-    },
-    {
-      firstName: 'Petr',
-      lastName: 'Žížala',
-      phone: '***',
-      email: 'example@example.com',
-      position: 'Mechanik',
-      role: '',
-      birthDate: '2020-04-08',
-      pwd: '123456',
-      createdAt: new Date(),
-      updatedAt: new Date()
-    }]);
+      },
+      {
+        firstName: 'Petr',
+        lastName: 'Žížala',
+        phone: '***',
+        email: 'example@example.com',
+        position: 'Mechanik',
+        role: '',
+        birthDate: '2020-04-08',
+        pwd: '123456',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }]);  
   },
 
   down: (queryInterface, Sequelize) => {
