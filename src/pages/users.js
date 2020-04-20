@@ -137,23 +137,23 @@ export const UserShow = (props) => {
                 <BooleanField label="Allow comments?" source="commentable" defaultValue />
                 <TextField label="Nb views" source="views" />
             </Tab>
-            <Tab label="Nářadí">
-            
-            <ReferenceManyField filter={{free: 1}}  reference="tools" target="null" addLabel={false} sort={{ field: 'created_at', order: 'DESC' }}>
-                                               
-                    <Datagrid>  
-                        <TextField source="free"/>         
-                        <TextField source="code"/>
-                        <TextField source="name"/>
-                        <TextField source="state"/>
-                        <BorrowButton/>
-                    </Datagrid>
-                
-            </ReferenceManyField>
-            
 
-
+            <Tab label="Tools">   
+                         
+                    <ReferenceManyField   reference="tools" target="null" addLabel={false} sort={{ field: 'created_at', order: 'DESC' }}>                                                    
+                        <List filter={{free: 1}} {...props}>    
+                            <Datagrid>  
+                                <TextField source="free"/>         
+                                <TextField source="code"/>
+                                <TextField source="name"/>
+                                <TextField source="state"/>
+                                <BorrowButton/>
+                            </Datagrid>  
+                        </List>                         
+                    </ReferenceManyField> 
+                           
             </Tab>
+
             <Tab label="Vypujčené nářadí">
            
                 <ReferenceManyField filter={{active: 1}}  reference="b_tools" target="UserId" addLabel={false} sort={{ field: 'created_at', order: 'DESC' }}>                                
