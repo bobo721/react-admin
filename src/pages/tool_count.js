@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { useNotify, useRedirect, fetchStart, fetchEnd, Button } from 'react-admin';
+import React from 'react';
+import { useQuery, Loading, Error } from 'react-admin';
 
 const BorrowCount = ({ record }) => {
-    const dispatch = useDispatch();
-    const notify = useNotify();
-    const [loading, setLoading] = useState(false);
-        setLoading(true);
-        fetch(`/api/toolsborrow/${record.id}`, { method: 'GET'})
-            .then((response) => {
-                    return response.json();
-            })
-            .catch((e) => {
-                notify('Error: comment not approved', 'warning')
-            })
-            .finally(() => {
-                setLoading(false);
-            });
+
+    const { data, loading, error } = useQuery({ 
+        type: 'getOne',
+        resource: 'toolsborrow',
+        payload: { id: record.id }
+    });
+
+    if (loading) return <Loading />;
+    if (error) return <Error />;
+    if (!data) return null;
+    console.log(data);
+    return (
+        data[0].total_time
+    )
 };
 
 export default BorrowCount;

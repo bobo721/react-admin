@@ -24,7 +24,7 @@ return(
             <TextField source="code" label="Kód" />
             <TextField source="name" />
             <TextField source="state" />
-            <BorrowCount />
+            <BorrowCount label="Celková doba vypujčení"/>
             <NumberField source="free" />
             <DateField source="add_time" />
             <EditButton />
