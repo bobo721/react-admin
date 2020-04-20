@@ -31,15 +31,23 @@ export const UserShow = (props) => {
 
 
 
-
     const ReturnButton = ({ record }) => {
+
+
+
         const notify = useNotify();
+
+        const dateNow = Date.parse(new Date());
+        const returnDate = Date.parse(record.createdAt);
+        const borrowTime = (dateNow - returnDate)/1000;
+        console.log(borrowTime);
+
         const refresh = useRefresh();
         const [approve, { loading }] = useMutation(
             {
                 type: 'update',
                 resource: 'b_tools',
-                payload: { id: record.id, data: { active: false } },
+                payload: { id: record.id, data: { active: false, time: borrowTime } },
             },
             {
                 onSuccess: ({ data }) => {
@@ -116,6 +124,28 @@ export const UserShow = (props) => {
     };
 
 
+    const BorrowTime = ({ record = {} }) => {
+
+        const dateNow = Date.parse(new Date());
+        const returnDate = Date.parse(record.createdAt);
+        const borrowTime = (dateNow - returnDate)/1000;
+
+        var sec_num = parseInt(borrowTime, 10); // don't forget the second param
+        var hours   = Math.floor(sec_num / 3600);
+        var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+        var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    
+        if (hours   < 10) {hours   = "0"+hours;}
+        if (minutes < 10) {minutes = "0"+minutes;}
+        if (seconds < 10) {seconds = "0"+seconds;}
+        const time = hours+':'+minutes+':'+seconds;
+
+        return (
+            time
+        )
+    };
+
+
     return(
     <Show {...props}>
         <SimpleShowLayout>
@@ -162,7 +192,7 @@ export const UserShow = (props) => {
                             <TextField source="code" />
                         </ReferenceField>
                         <NumberField source="active"/>
-                        <NumberField source="time"/>
+                        <BorrowTime label="Doba vypujčení"/>
                         <ReferenceField label="Tool" source="ToolId" reference="tools">
                         
                         <TextField source="state" />

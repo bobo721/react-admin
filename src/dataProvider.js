@@ -65,6 +65,7 @@ export default (apiUrl, httpClient = fetchUtils.fetchJson) => {
                 break;
             }
             case GET_ONE:
+                console.log(resource);
                 url = `${apiUrl}/${resource}/${params.id}`;
                 break;
             case GET_MANY: {

@@ -1,6 +1,7 @@
 // in src/pages/tools.js
 import React from 'react';
-import { List, Datagrid, Edit, EditButton, Create, SelectInput, SimpleForm, TextField, DateInput, DateField, Filter, TextInput, BooleanInput, NumberField } from 'react-admin';
+import BorrowCount from './tool_count'
+import {List, Datagrid, Edit, EditButton, Create, SelectInput, SimpleForm, TextField, DateInput, DateField, Filter, TextInput, BooleanInput, NumberField } from 'react-admin';
 
 const ToolFilter = (props) => (
     <Filter {...props}>
@@ -9,19 +10,27 @@ const ToolFilter = (props) => (
     </Filter>
 );
 
-export const ToolList = props => (
+
+
+export const ToolList = props => {
+
+    
+    
+
+return(
     <List {...props} filters={<ToolFilter />}>
         <Datagrid rowClick="edit">
             <TextField source="id" />
             <TextField source="code" label="Kód" />
             <TextField source="name" />
             <TextField source="state" />
+            <BorrowCount label="Celková doba vypujčení"/>
             <NumberField source="free" />
             <DateField source="add_time" />
             <EditButton />
         </Datagrid>
     </List>
-);
+)};
 
 export const ToolCreate = props => (
     <Create {...props}>
