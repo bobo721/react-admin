@@ -21,6 +21,7 @@ module.exports = (app) => {
     app.get('/api/tools', toolController.findAll);
     app.get('/api/tools/many', toolController.findMany);
     app.get('/api/tools/:id', toolController.findByID);
+    app.get('/api/toolsborrow/:id', toolController.borrowCount);
     app.put('/api/tools/:id', toolController.update);
     app.delete('/api/tools/:id', toolController.delete);
 

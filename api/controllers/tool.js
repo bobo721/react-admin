@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
 const Tool = require('../models').Tool;
+const B_tool = require('../models').B_tool;
 
 module.exports = {
 
@@ -45,6 +46,8 @@ module.exports = {
             options.where.free = filtry.free;
         }
 
+        
+
 
         return Tool
         .findAll(options)
@@ -54,6 +57,34 @@ module.exports = {
             //console.log(user.rows);
             res.header("Content-Range", 'items 0-' + tool.length + '/' + tool.length);
             res.status(200).send(tool);
+        })
+        .catch(error => res.status(400).send(error));
+    },
+
+    borrowCount(req, res) {
+        //console.log(req);  
+
+        const options = {
+            attributes: [
+                [Sequelize.fn('sum', Sequelize.col('time')), 'total_time'],
+              ],
+            raw: true,
+            where: ({
+                ToolId: req.params.id
+            }),
+            order: 
+                []
+            ,
+        };
+
+
+        return B_tool
+        .findAll(options)
+            //console.log(user);
+            //res.status(201).send(test); 
+        .then(b_tool => {
+            //console.log(user.rows);
+            res.status(200).send(b_tool);
         })
         .catch(error => res.status(400).send(error));
     },
