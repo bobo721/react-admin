@@ -11,15 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     }
   })
 
-  const Tool = sequelize.define('Tool', {
-    code: DataTypes.STRING,
-    name: DataTypes.STRING,
-    state: DataTypes.STRING,
-    free: DataTypes.INTEGER
+  const Damage_tool = sequelize.define('Damage_tool', {
+    state: DataTypes.INTEGER,
+    note: DataTypes.INTEGER
   }, {});
-  Tool.associate = function(models) {
-    Tool.hasMany(models.B_tool);
-    Tool.hasMany(models.Damage_tool);
+  Damage_tool.associate = function(models) {
+    Damage_tool.belongsTo(models.User);
+    Damage_tool.belongsTo(models.Tool);
   };
-  return Tool;
+  return Damage_tool;
 };

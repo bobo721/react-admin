@@ -23,6 +23,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   User.associate = function(models) {
     User.hasMany(models.B_tool);
+    Tool.hasMany(models.Damage_tool);
   };
   return User;
 };
